@@ -1,0 +1,36 @@
+name: gsoc26-agl-roslidar-docker
+
+services:
+  # Base image containing dependencies.
+  base:
+    image: agl-roslidar:base
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: '4G'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    # Networking and IPC for ROS
+    network_mode: bridge
+    hostname: gsoc26-agl-roslidar-docker
+    ipc: host
+    # Needed to display graphical applications
+    privileged: True
+    environment:
+      # Allows graphical programs in the container.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      # Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+       # Mount workspace
+      - ./agl-master:/home/dev/agl-build/:rw
+
+
