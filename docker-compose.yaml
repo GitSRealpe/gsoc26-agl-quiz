@@ -31,7 +31,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
        # Mount workspace
-      - ./agl-master:/home/dev/agl-build/:rw
+      - ./agl-master:/home/dev/agl-master/:rw
       - ./my_app:/home/dev/my_app/:rw
 
 
