@@ -38,6 +38,15 @@ class _HomePageState extends State<HomePage> {
       _counter++;
     });
   }
+
+  // Navigate to the new Image Screen
+  void _openImageScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ImageScreen()),
+    );
+  }
+
   // Play Sound
   void _playHonk() {
     // _audioPlayer.play(AssetSource('button_press_sound.wav'));
@@ -100,6 +109,26 @@ class _HomePageState extends State<HomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+// image screen
+class ImageScreen extends StatelessWidget {
+  const ImageScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Image View"),
+        backgroundColor: Colors.green,
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          child: Image.asset("assets/rear_view.png", fit: BoxFit.contain),
+        ),
       ),
     );
   }
