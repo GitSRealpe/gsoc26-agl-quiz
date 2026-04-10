@@ -32,5 +32,6 @@ services:
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
        # Mount workspace
       - ./agl-master:/home/dev/agl-build/:rw
+      - ./my_app:/home/dev/my_app/:rw
 
 
