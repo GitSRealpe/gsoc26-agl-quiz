@@ -24,6 +24,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
   final String title;
+  final double iconSize = 64.0;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,6 +37,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _counter++;
     });
+  }
+  // Play Sound
+  void _playHonk() {
+    // _audioPlayer.play(AssetSource('button_press_sound.wav'));
   }
 
   @override
@@ -53,6 +58,40 @@ class _HomePageState extends State<HomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Expanded(child: const SizedBox(width: 40)),
+
+            // image screen button
+            Row(
+              mainAxisAlignment: .center,
+              children: [
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _openImageScreen,
+                      child: Column(
+                        children: [
+                          Icon(Icons.videocam, size: widget.iconSize),
+                          const Text('Ship views'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _playHonk,
+                      child: Column(
+                        children: [
+                          Icon(Icons.volume_up, size: widget.iconSize),
+                          const Text('Honk'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
