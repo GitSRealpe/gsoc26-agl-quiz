@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +33,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
+  late final AudioPlayer _audioPlayer;
+  @override
+  void initState() {
+    super.initState();
+    _audioPlayer = AudioPlayer();
+  }
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -49,7 +61,7 @@ class _HomePageState extends State<HomePage> {
 
   // Play Sound
   void _playHonk() {
-    // _audioPlayer.play(AssetSource('button_press_sound.wav'));
+    _audioPlayer.play(AssetSource('honk.wav'));
   }
 
   @override
