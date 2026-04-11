@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,11 +37,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
   late final AudioPlayer _audioPlayer;
+
+  final deviceInfo = DeviceInfoPlugin();
+  LinuxDeviceInfo _osRelease = LinuxDeviceInfo(
+    name: "Unknown",
+    id: "noid",
+    prettyName: "noPretty",
+    machineId: "null",
+  );
+
   @override
   void initState() {
     super.initState();
+    if (Platform.isLinux) {
+      deviceInfo.linuxInfo.then((sysInfo) {
+        setState(() {
+          _osRelease = sysInfo;
+        });
+      });
+    }
     _audioPlayer = AudioPlayer();
   }
+
   @override
   void dispose() {
     _audioPlayer.dispose();
@@ -75,7 +95,29 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            const Text('You have pushed the button this many times:'),
+            const Text('Captain GitSRealpe:'),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: "OS Name: "),
+                  TextSpan(
+                    text: _osRelease.name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: "Version: "),
+                  TextSpan(
+                    text: _osRelease.version,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
